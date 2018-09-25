@@ -5,6 +5,9 @@ const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 
+app.locals.title = 'Dberg Golf Pool';
+app.set('port', process.env.PORT || 3001);
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -65,6 +68,6 @@ app.get('/api/v1/users', (request, response) => {
     });
 });
 
-app.listen(3000, () => {
-  console.log('Express intro running on localhost:3000');
+app.listen(app.get('port'), () => {
+  console.log(`${app.locals.title} is running on ${app.get('port')}.`);
 });
