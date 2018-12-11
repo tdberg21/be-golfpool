@@ -1,8 +1,6 @@
 const express = require('express');
 const app = express();
-const cors = require('cors')
-
-// const index = require("./routes/index");
+var cors = require('cors')
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
@@ -68,6 +66,7 @@ app.post('/api/v1/users', async (request, response) => {
 });
 
 app.get('/', (request, response) => {
+  response.send('this is a response from the server at 3001')
 });
 
 app.get('/api/v1/users', (request, response) => {
@@ -80,10 +79,6 @@ app.get('/api/v1/users', (request, response) => {
     });
 });
 
-io.listen(3002, () => {
+http.listen(app.get('port'), () => {
   console.log("sockets bitch!")
 })
-
-app.listen(app.get('port'), () => {
-  console.log(`${app.locals.title} is running on ${app.get('port')}.`);
-});
