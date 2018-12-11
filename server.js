@@ -1,5 +1,11 @@
 const express = require('express');
 const app = express();
+const cors = require('cors')
+
+// const index = require("./routes/index");
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
+
 const bodyParser = require('body-parser');
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
@@ -10,15 +16,21 @@ app.set('port', process.env.PORT || 3001);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
-app.use((request, response, next) => {
-  response.header('Access-Control-Allow-Origin', '*')
-  next()
-});
+io.on('connection', (socket) => {
+  console.log('Someone has connected');
 
-app.use((request, response, next) => {
-  response.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
-  next()
+  socket.emit('message', `A new user, ${Date.now()}, has connected`);
+
+  socket.on('message', (message) => {
+    console.log(`The new user's name is ${message.username}, and his/her message is: ${message.text}`);
+  })
+
+  socket.on('disconnect', () => {
+    console.log('A user has disconnected');
+  });
+
 });
 
 app.post('/api/v1/users/new', (request, response) => {
@@ -67,6 +79,10 @@ app.get('/api/v1/users', (request, response) => {
       response.status(500).json({ error });
     });
 });
+
+io.listen(3002, () => {
+  console.log("sockets bitch!")
+})
 
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is running on ${app.get('port')}.`);
