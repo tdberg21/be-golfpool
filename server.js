@@ -69,6 +69,16 @@ app.get('/', (request, response) => {
   response.send('this is a response from the server at 3001')
 });
 
+app.get('/api/v1/golfers', (request, response) => {
+  database('golfers').select()
+    .then( golfers => {
+      response.status(200).json(golfers);
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    });
+});
+
 app.get('/api/v1/users', (request, response) => {
   database('users').select()
     .then((user) => {
