@@ -1,0 +1,87 @@
+exports.seed = function(knex, Promise) {
+  // Deletes ALL existing entries
+  return knex('golfers').del()
+    .then(function () {
+      // Inserts seed entries
+      return knex('golfers').insert([
+        { 
+          api_id: 40000015,
+          first_name: 'Dustin',
+          last_name: 'Johnson',
+          country: 'USA',
+          // rank: 1,
+          // last_rank: 3,
+          // tour: 'PGA Tour',
+          tournament: 'TOUR Championship',
+          tournament_id: 1,
+          year: 2018,
+          // course: 'East Lake Golf Club',
+          user_id: null },
+        { api_id: 40000013,
+          first_name: 'Justin',
+          last_name: 'Rose',
+          country: 'UK',
+          // rank: 2,
+          // last_rank: 1,
+          // tour: 'PGA Tour',
+          tournament: 'TOUR Championship',
+          tournament_id: 1,
+          year: 2018,
+          // course: 'East Lake Golf Club',
+          user_id: null },
+        { api_id: 40000007,
+          first_name: 'Brooks',
+          last_name: 'Koepka',
+          country: 'USA',
+          // rank: 3,
+          // last_rank: 2,
+          // tour: 'PGA Tour',
+          tournament: 'TOUR Championship',
+          tournament_id: 1,
+          year: 2018,
+          // course: 'East Lake Golf Club',
+          user_id: null },
+        { api_id: 40001434,
+          first_name: 'Justin',
+          last_name: 'Thomas',
+          country: 'USA',
+          // rank: 4,
+          // last_rank: 4,
+          // tour: 'PGA Tour',
+          tournament: 'TOUR Championship',
+          tournament_id: 1,
+          year: 2018,
+          // course: 'East Lake Golf Club',
+          user_id: null },
+        { api_id: 40001012,
+          first_name: 'Francesco',
+          last_name: 'Molinari',
+          country: 'Spain',
+          // rank: 5,
+          // last_rank: 6,
+          // tour: 'PGA Tour',
+          tournament: 'TOUR Championship',
+          tournament_id: 1,
+          year: 2018,
+          // course: 'East Lake Golf Club',
+          user_id: null },
+        { api_id: 40000965,
+          first_name: 'Rory',
+          last_name: 'McIlroy',
+          country: 'UK',
+          // rank: 6,
+          // last_rank: 5,
+          // tour: 'PGA Tour',
+          tournament: 'TOUR Championship',
+          tournament_id: 1,
+          year: 2018,
+          // course: 'East Lake Golf Club',
+          user_id: null 
+        } 
+      ]);
+    });
+};
+
+
+
+
