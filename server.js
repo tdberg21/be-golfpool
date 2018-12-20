@@ -16,13 +16,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
+let chatHistory = [{username: 'Neon Dion', text: 'Interception!'}];
+
 io.on('connection', (socket) => {
   console.log('Someone has connected');
-
-  socket.emit('message', `A new user, ${Date.now()}, has connected`);
+  // socket.on('join', handleJoin); ----------> to see who's online
+  // socket.on('leave', handleLeave);
+  socket.emit('chatHistory', chatHistory)
 
   socket.on('message', (message) => {
-    console.log(`The new user's name is ${message.username}, and his/her message is: ${message.text}`);
+    chatHistory.push(message);
+    socket.send(message);
   })
 
   socket.on('disconnect', () => {
@@ -52,6 +56,7 @@ app.post('/api/v1/users/new', (request, response) => {
 
 app.post('/api/v1/users', async (request, response) => {
   const guest = request.body;
+  
   try {
     const users = await database('users').select()
     console.log('trying')
